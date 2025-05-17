@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Облік браку - IF Six Was Eight</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <a href="#" class="logo">IF Six Was Eight</a>
+    </header>
+
+    <div id="pin-screen" class="container" style="display: block;">
+        <h1>Вхід за ПІН-кодом</h1>
+        <form id="pinForm">
+            <div>
+                <label for="pinCode">ПІН-код:</label>
+                <input type="password" id="pinCode" name="pinCode" maxlength="4" pattern="\d{4}" inputmode="numeric" required>
+            </div>
+            <button type="submit" class="button">Увійти</button>
+        </form>
+        <div id="pinMessages" class="messages-placeholder" style="margin-top:15px;"></div>
+    </div>
+
+    <div id="app-content" style="display: none;">
+        <nav class="main-menu">
+            <ul>
+                <li><a href="#" id="navAddReport" class="active">Додати випадок/звіт</a></li>
+                <li><a href="#" id="navViewReports">Переглянути звіти</a></li>
+            </ul>
+        </nav>
+
+        <div id="addReportSection" class="container">
+            <h1>Реєстрація випадку браку</h1>
+            <form id="addDefectForm" novalidate>
+                <div>
+                    <label for="defectDate">Дата виявлення:</label>
+                    <input type="date" id="defectDate" name="defectDate" required>
+                    <span class="error-message" id="defectDateError"></span>
+                </div>
+                <div>
+                    <label for="defectType">Тип браку:</label>
+                    <select id="defectType" name="defectType" required>
+                        <option value="">-- Оберіть тип --</option>
+                    </select>
+                    <span class="error-message" id="defectTypeError"></span>
+                </div>
+                <div>
+                    <label for="quantity">Кількість:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" required>
+                    <span class="error-message" id="quantityError"></span>
+                </div>
+                <div>
+                    <label for="department">Підрозділ:</label>
+                    <select id="department" name="department" required>
+                        <option value="">-- Оберіть підрозділ --</option>
+                    </select>
+                    <span class="error-message" id="departmentError"></span>
+                </div>
+                <div>
+                    <label for="responsiblePerson">Відповідальна особа (Ім'я):</label>
+                    <input type="text" id="responsiblePerson" name="responsiblePerson">
+                    <span class="error-message" id="responsiblePersonError"></span>
+                </div>
+                <div>
+                    <label for="defectCause">Причина браку:</label>
+                    <select id="defectCause" name="defectCause" required>
+                        <option value="">-- Оберіть причину --</option>
+                    </select>
+                    <span class="error-message" id="defectCauseError"></span>
+                </div>
+                <div>
+                    <label for="description">Додатковий опис (необов'язково):</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                <button type="submit">Додати випадок</button>
+            </form>
+            <div id="messages" class="messages-placeholder"></div>
+        </div>
+
+        <div id="viewReportsSection" class="container" style="display: none;">
+            <h1>Перегляд звітів про брак</h1>
+            
+            <div style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center;">
+                <div>
+                    <label for="filterStartDate">Дата від:</label>
+                    <input type="date" id="filterStartDate" name="filterStartDate" style="padding: 10px;">
+                </div>
+                <div>
+                    <label for="filterEndDate">Дата до:</label>
+                    <input type="date" id="filterEndDate" name="filterEndDate" style="padding: 10px;">
+                </div>
+            </div>
+            
+            <div>
+                <label for="filterDefectType">Фільтр за типом браку:</label>
+                <select id="filterDefectType" name="filterDefectType">
+                    <option value="">-- Всі типи --</option>
+                </select>
+            </div>
+            
+            <div class="table-responsive-wrapper">
+                <div id="reportsTableContainer">
+                    </div>
+            </div>
+            <button id="exportToExcel" class="button" style="margin-top: 20px;">Експорт в Excel</button>
+            <div id="reportsMessages" class="messages-placeholder"></div>
+            
+            <div id="chartsContainer" style="margin-top: 30px;">
+                <h2>Аналітика браку</h2>
+                <div style="margin-bottom: 40px; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm);">
+                    <canvas id="defectsByTypeChart"></canvas>
+                </div>
+                <div style="margin-bottom: 40px; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm);">
+                    <canvas id="defectsByCauseChart"></canvas>
+                </div>
+                <div style="padding: 10px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm);">
+                    <canvas id="defectsByDepartmentChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
